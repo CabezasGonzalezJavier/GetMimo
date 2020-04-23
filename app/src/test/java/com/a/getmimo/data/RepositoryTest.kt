@@ -1,6 +1,5 @@
 package com.a.getmimo.data
 
-import com.a.getmimo.data.Repository
 import com.a.getmimo.data.source.LocalDataSource
 import com.a.getmimo.data.source.RemoteDataSource
 import com.nhaarman.mockitokotlin2.verify
@@ -22,12 +21,12 @@ class RepositoryTest {
     lateinit var repository: Repository
 
     @Before
-    fun setup(){
+    fun setup() {
         repository = Repository(remoteDataSource, localDataSource)
     }
 
     @Test
-    fun `getting lesson`(){
+    fun `getting lesson`() {
         runBlocking {
             repository.getLesson()
 

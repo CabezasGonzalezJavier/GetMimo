@@ -2,7 +2,7 @@ package com.a.getmimo.data.source
 
 import com.a.getmimo.data.source.networking.Resource
 import com.a.getmimo.data.source.networking.ResponseHandler
-import com.a.getmimo.domain.Lesson
+import com.a.getmimo.domain.entity.Lesson
 
 interface RemoteDataSource {
 
