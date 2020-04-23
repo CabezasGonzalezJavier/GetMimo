@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/background_button</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:layout_marginTop">@dimen/margin_top_bottom</item>
+    </style>
+    <style name="AppTheme.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_marginTop">@dimen/margin_top_bottom</item>
+        <item name="android:backgroundTint">@color/colorAccent</item>
+    </style>
 </resources>

@@ -1,6 +1,6 @@
 package com.a.getmimo.domain.entity
 
 data class Content(
-    private val color: String? = null,
-    private val text: String? = null
+    val color: String? = null,
+    val text: String? = null
 )

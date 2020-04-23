@@ -23,15 +23,21 @@ private val mockedAppModule = module {
     single { Dispatchers.Unconfined }
 }
 
-val content = Content("color", "text")
+val content = Content("color", "texttexttext")
 val contentList = listOf(content.copy())
-val defaultLesson= Lesson(1, contentList, 0, 0)
+val defaultLesson= Lesson(1, contentList, 4, 8)
 val oneLesson = listOf(defaultLesson.copy())
 val defaultResource = Resource(Status.SUCCESS, oneLesson, "")
 
 
 val emptyLessons = listOf<Lesson>()
 val emptyResource = Resource(Status.SUCCESS, emptyLessons, "")
+
+val threeContent = Content("color", "text")
+val threeContentList = listOf(threeContent.copy(),threeContent.copy(),threeContent.copy())
+val threeDefaultLesson= Lesson(1, threeContentList, 0, 0)
+val threeOneLesson = listOf(threeDefaultLesson.copy())
+val threeResource = Resource(Status.SUCCESS, threeOneLesson, "")
 
 class FakeLocalDataSource : LocalDataSource {
 

@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.a.getmimo.FakeRemoteDataSource
 import com.a.getmimo.data.source.RemoteDataSource
-import com.a.getmimo.defaultResource
 import com.a.getmimo.initMockedDi
 import com.a.getmimo.ui.MainViewModel
 import com.nhaarman.mockitokotlin2.verify
@@ -66,7 +65,7 @@ class MainIntegrationTest : AutoCloseKoinTest() {
             mainViewModel.myLaunch()
 
             verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
-            verify(observer).onChanged(MainViewModel.UiModel.Content(defaultResource.data))
+            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
         }
     }
 
@@ -86,4 +85,47 @@ class MainIntegrationTest : AutoCloseKoinTest() {
 
         verify(observer).onChanged(MainViewModel.UiModel.Loading)
     }
+
+    @Test
+    fun `checking solution`() {
+        runBlocking {
+
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            mainViewModel.checkSolution("")
+
+
+            verify(observer).onChanged(MainViewModel.UiModel.ShowEmptyInput)
+        }
+    }
+
+    @Test
+    fun `checking ok solution`() {
+        runBlocking {
+
+
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            mainViewModel.checkSolution("text")
+
+            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
+            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+            verify(observer).onChanged(MainViewModel.UiModel.EnableButton)
+        }
+    }
+
+    @Test
+    fun `checking wrong solution`() {
+        runBlocking {
+
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            mainViewModel.checkSolution("tet")
+
+            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
+            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+            verify(observer).onChanged(MainViewModel.UiModel.DisableButton)
+        }
+    }
+
 }

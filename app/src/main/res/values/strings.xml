@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GetMimo</string>
+
+    <string name="issue_internet">Can you check your internet, please?</string>
+    <string name="issue_connection_error">Connection error</string>
+    <string name="issue_empty_data">Empty data</string>
+    <string name="issue_empty_input">Empty input</string>
+
+    <string name="main_run">Run</string>
+    <string name="main_hint">Enter solution</string>
 </resources>

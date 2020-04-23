@@ -7,6 +7,7 @@ import com.a.getmimo.domain.entity.networking.Resource
 import com.a.getmimo.domain.entity.networking.Status
 import com.a.getmimo.domain.usecases.GetLessons
 import com.a.getmimo.emptyResource
+import com.a.getmimo.threeResource
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
@@ -71,21 +72,7 @@ class MainViewModelTest {
         }
     }
 
-    @Test
-    fun `launching content`() {
-        runBlocking {
 
-
-            whenever(getLessons.invoke()).thenReturn(defaultResource)
-            mainViewModel.model.observeForever(observer)
-            mainViewModel.myLaunch()
-            val lessons = getLessons.invoke().data
-
-            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
-            verify(observer).onChanged(MainViewModel.UiModel.Content(defaultResource.data))
-            assertEquals(lessons, defaultResource.data)
-        }
-    }
 
     @Test
     fun `launching null content with success status`() {
@@ -135,5 +122,90 @@ class MainViewModelTest {
         mainViewModel.checkInternet(true)
 
         verify(observer).onChanged(MainViewModel.UiModel.Loading)
+    }
+
+    @Test
+    fun `launching one content`() {
+        runBlocking {
+
+
+            whenever(getLessons.invoke()).thenReturn(defaultResource)
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            val lessons = getLessons.invoke().data
+
+            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
+            verify(observer).onChanged(MainViewModel.UiModel.Loading)
+            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+            assertEquals(lessons, defaultResource.data!!)
+        }
+    }
+
+    @Test
+    fun `launching three content`() {
+        runBlocking {
+
+            whenever(getLessons.invoke()).thenReturn(threeResource)
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            val lessons = getLessons.invoke().data
+
+            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
+            verify(observer).onChanged(MainViewModel.UiModel.Loading)
+            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+            verify(observer).onChanged(MainViewModel.UiModel.ShowSecondText("text"))
+            assertEquals(lessons, threeResource.data!!)
+        }
+    }
+
+    @Test
+    fun `checking solution`(){
+        runBlocking {
+
+            whenever(getLessons.invoke()).thenReturn(threeResource)
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            val lessons = getLessons.invoke().data
+        mainViewModel.checkSolution("")
+
+        verify(observer).onChanged(MainViewModel.UiModel.ShowEmptyInput)
+    }}
+
+    @Test
+    fun `checking ok solution`(){
+        runBlocking {
+
+        whenever(getLessons.invoke()).thenReturn(threeResource)
+        mainViewModel.model.observeForever(observer)
+        mainViewModel.myLaunch()
+        val lessons = getLessons.invoke().data
+        mainViewModel.checkSolution("text")
+
+        verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
+        verify(observer).onChanged(MainViewModel.UiModel.Loading)
+        verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+        verify(observer).onChanged(MainViewModel.UiModel.ShowSecondText("text"))
+        assertEquals(lessons, threeResource.data!!)
+        verify(observer).onChanged(MainViewModel.UiModel.EnableButton)
+        }
+    }
+
+    @Test
+    fun `checking wrong solution`(){
+        runBlocking {
+
+            whenever(getLessons.invoke()).thenReturn(threeResource)
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            val lessons = getLessons.invoke().data
+            mainViewModel.checkSolution("tet")
+
+            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
+            verify(observer).onChanged(MainViewModel.UiModel.Loading)
+            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+            verify(observer).onChanged(MainViewModel.UiModel.ShowSecondText("text"))
+            assertEquals(lessons, threeResource.data!!)
+            verify(observer).onChanged(MainViewModel.UiModel.DisableButton)
+        }
     }
 }
