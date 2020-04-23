@@ -1,4 +1,4 @@
-package com.a.getmimo.data.source.networking
+package com.a.getmimo.domain.entity.networking
 
 import retrofit2.HttpException
 import java.lang.Exception

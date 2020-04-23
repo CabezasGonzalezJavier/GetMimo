@@ -2,11 +2,11 @@ package com.a.getmimo.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.a.getmimo.data.source.networking.Resource
-import com.a.getmimo.data.source.networking.Status
-import com.a.getmimo.domain.entity.Content
-import com.a.getmimo.domain.entity.Lesson
+import com.a.getmimo.defaultResource
+import com.a.getmimo.domain.entity.networking.Resource
+import com.a.getmimo.domain.entity.networking.Status
 import com.a.getmimo.domain.usecases.GetLessons
+import com.a.getmimo.emptyResource
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
@@ -57,8 +57,7 @@ class MainViewModelTest {
     @Test
     fun `launching empty content`() {
         runBlocking {
-            val emptyLessons = listOf<Lesson>()
-            val emptyResource = Resource(Status.SUCCESS, emptyLessons, "")
+
 
 
             whenever(getLessons.invoke()).thenReturn(emptyResource)
@@ -75,20 +74,16 @@ class MainViewModelTest {
     @Test
     fun `launching content`() {
         runBlocking {
-            val content = Content("color", "text")
-            val contentList = listOf(content.copy())
-            val defaultLesson= Lesson(1, contentList, 0, 0)
-            val oneLesson = listOf(defaultLesson.copy())
-            val resource = Resource(Status.SUCCESS, oneLesson, "")
 
-            whenever(getLessons.invoke()).thenReturn(resource)
+
+            whenever(getLessons.invoke()).thenReturn(defaultResource)
             mainViewModel.model.observeForever(observer)
             mainViewModel.myLaunch()
             val lessons = getLessons.invoke().data
 
             verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
-            verify(observer).onChanged(MainViewModel.UiModel.Content(resource.data))
-            assertEquals(lessons, resource.data)
+            verify(observer).onChanged(MainViewModel.UiModel.Content(defaultResource.data))
+            assertEquals(lessons, defaultResource.data)
         }
     }
 

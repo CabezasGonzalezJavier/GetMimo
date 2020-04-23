@@ -2,7 +2,7 @@ package com.a.getmimo.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.a.getmimo.data.source.networking.Status
+import com.a.getmimo.domain.entity.networking.Status
 import com.a.getmimo.domain.entity.Lesson
 import com.a.getmimo.domain.usecases.GetLessons
 import com.a.getmimo.ui.common.ScopedViewModel

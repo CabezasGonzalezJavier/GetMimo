@@ -1,7 +1,8 @@
-package com.a.getmimo
+package com.a.getmimo.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.a.getmimo.R
 
 class MainActivity : AppCompatActivity() {
 
