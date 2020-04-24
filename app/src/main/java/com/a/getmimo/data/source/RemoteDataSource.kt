@@ -12,6 +12,7 @@ interface RemoteDataSource {
 class MimoDataSource(private val mimoDB: MimoDB,
                      private val responseHandler: ResponseHandler
 ) : RemoteDataSource {
+
     override suspend fun getLessons(): Resource<List<Lesson>> {
         return try {
             val response = mimoDB.service.getLessonsAsync().await().lessons.map{

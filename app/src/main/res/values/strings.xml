@@ -8,4 +8,6 @@
 
     <string name="main_run">Run</string>
     <string name="main_hint">Enter solution</string>
+
+    <string name="done_title">Congratulations!! \nThe lesson is finished.</string>
 </resources>

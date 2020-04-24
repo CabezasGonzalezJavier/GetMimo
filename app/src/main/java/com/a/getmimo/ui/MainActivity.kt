@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             if (model is MainViewModel.UiModel.Loading) View.VISIBLE else View.GONE
 
         when (model) {
+            is MainViewModel.UiModel.Done -> showDone()
             is MainViewModel.UiModel.ShowEmptyData -> showEmptyData()
             is MainViewModel.UiModel.ShowErrorCall -> showErrorCall()
             is MainViewModel.UiModel.ShowCanCheckYourInternet -> showCanCheckYourInternet()
@@ -73,6 +74,10 @@ class MainActivity : AppCompatActivity() {
             is MainViewModel.UiModel.EnableButton -> showButtonEnable()
             is MainViewModel.UiModel.ShowEmptyInput -> showEmptyInput()
         }
+    }
+
+    private fun showDone() {
+        DoneDialog.newInstance().show(supportFragmentManager, "")
     }
 
     private fun showEmptyInput() {
@@ -86,10 +91,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showButtonEnable() {
         main_button.isEnabled = true
+        main_button.background = resources.getDrawable(R.drawable.background_button, null)
     }
 
     private fun showButtonDisable() {
         main_button.isEnabled = false
+        main_button.background = resources.getDrawable(R.drawable.background_disable_button, null)
     }
 
     private fun showFirstText(firstText: String) {

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.a.getmimo.FakeRemoteDataSource
 import com.a.getmimo.data.source.RemoteDataSource
+import com.a.getmimo.domain.usecases.GetLessons
 import com.a.getmimo.initMockedDi
 import com.a.getmimo.ui.MainViewModel
 import com.nhaarman.mockitokotlin2.verify

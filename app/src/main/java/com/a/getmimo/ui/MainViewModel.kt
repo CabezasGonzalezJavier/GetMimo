@@ -103,6 +103,7 @@ class MainViewModel(
                     )
                 }
             } else {
+                myIterator += 1
                 checkInput()
             }
 

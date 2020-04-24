@@ -1,5 +1,6 @@
 package com.a.getmimo
 
+
 import android.app.Application
 import com.a.getmimo.data.Repository
 import com.a.getmimo.data.RepositoryInterface
@@ -21,7 +22,7 @@ fun Application.initDI() {
     startKoin {
         androidLogger()
         androidContext(this@initDI)
-        modules(listOf(appModule, dataModule, useCasesModule, scopesModule))
+        modules(listOf(appModule, dataModule, useCasesModule,scopesModule))
     }
 }
 
@@ -29,7 +30,7 @@ private val appModule = module {
     factory<LocalDataSource> { RoomDataSource() }
     factory<RemoteDataSource> { MimoDataSource(get(), get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
-    single(named("baseUrl")) { "https://mimochallenge.azurewebsites.net/api/lessons" }
+    single(named("baseUrl")) { "https://mimochallenge.azurewebsites.net/api/" }
     single { MimoDB(get(named("baseUrl"))) }
     single { ResponseHandler() }
 }
@@ -45,5 +46,6 @@ val useCasesModule = module {
 private val scopesModule = module {
     scope(named<MainActivity>()) {
         viewModel { MainViewModel(get(), get()) }
+        scoped { GetLessons(get()) }
     }
 }

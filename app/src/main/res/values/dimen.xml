@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="padding">5dp</dimen>
-    <dimen name="margin_top_bottom">5dp</dimen>
+    <dimen name="margin">5dp</dimen>
     <dimen name="margin_start_end">5dp</dimen>
     <dimen name="width_edit_text">160dp</dimen>
     <dimen name="height_text">40dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_scan_top_margin">26dp</dimen>
+    <dimen name="activity_margin_end_scan">3dp</dimen>
+
+    <dimen name="item_paddingLeft">8dp</dimen>
+    <dimen name="item_margin_top">9dp</dimen>
+
+    <dimen name="list_item_padding">8dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="get_number_width">450dp</dimen>
+
+    <dimen name="height_image">200dp</dimen>
+    <dimen name="width_image">130dp</dimen>
 </resources>
