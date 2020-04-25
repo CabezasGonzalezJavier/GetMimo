@@ -35,7 +35,7 @@ Data layer:
 7. **[Koin](https://insert-koin.io/)**
 8. **[Mockito](https://site.mockito.org/)**
 9. **[MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)**
-10. **[Espresso](https://developer.android.com/training/testing/espresso)**]
+10. **[Espresso](https://developer.android.com/training/testing/espresso)**
 
 Also visit my blog: **[The developer world is yours](http://thedeveloperworldisyours.com/)**
 
