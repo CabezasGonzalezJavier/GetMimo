@@ -1,5 +1,6 @@
-package com.a.getmimo.data.source
+package com.a.getmimo.data.source.remote
 
+import com.a.getmimo.data.source.toDomainLesson
 import com.a.getmimo.domain.entity.networking.Resource
 import com.a.getmimo.domain.entity.networking.ResponseHandler
 import com.a.getmimo.domain.entity.Lesson

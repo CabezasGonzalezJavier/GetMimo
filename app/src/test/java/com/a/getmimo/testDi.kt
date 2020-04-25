@@ -1,9 +1,10 @@
 package com.a.getmimo
 
-import com.a.getmimo.data.source.LocalDataSource
-import com.a.getmimo.data.source.RemoteDataSource
+import com.a.getmimo.data.source.local.LocalDataSource
+import com.a.getmimo.data.source.remote.RemoteDataSource
 import com.a.getmimo.domain.entity.Content
 import com.a.getmimo.domain.entity.Lesson
+import com.a.getmimo.domain.entity.SimpleLesson
 import com.a.getmimo.domain.entity.networking.Resource
 import com.a.getmimo.domain.entity.networking.Status
 import kotlinx.coroutines.Dispatchers
@@ -39,8 +40,10 @@ val threeDefaultLesson= Lesson(1, threeContentList, 0, 0)
 val threeOneLesson = listOf(threeDefaultLesson.copy())
 val threeResource = Resource(Status.SUCCESS, threeOneLesson, "")
 
-class FakeLocalDataSource : LocalDataSource {
+val simpleLessonMocked = SimpleLesson(1577836800000L, 1577836820000L, 9)
 
+class FakeLocalDataSource : LocalDataSource {
+    override suspend fun saveLesson(simple: SimpleLesson) {}
 
 
 }

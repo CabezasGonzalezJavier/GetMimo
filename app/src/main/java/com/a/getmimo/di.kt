@@ -4,7 +4,12 @@ package com.a.getmimo
 import android.app.Application
 import com.a.getmimo.data.Repository
 import com.a.getmimo.data.RepositoryInterface
-import com.a.getmimo.data.source.*
+import com.a.getmimo.data.source.local.LocalDataSource
+import com.a.getmimo.data.source.local.MimoDatabase
+import com.a.getmimo.data.source.local.RoomDataSource
+import com.a.getmimo.data.source.remote.MimoDB
+import com.a.getmimo.data.source.remote.MimoDataSource
+import com.a.getmimo.data.source.remote.RemoteDataSource
 import com.a.getmimo.domain.entity.networking.ResponseHandler
 import com.a.getmimo.domain.usecases.GetLessons
 import com.a.getmimo.ui.MainActivity
@@ -27,8 +32,14 @@ fun Application.initDI() {
 }
 
 private val appModule = module {
-    factory<LocalDataSource> { RoomDataSource() }
-    factory<RemoteDataSource> { MimoDataSource(get(), get()) }
+    single { MimoDatabase.getInstance(get()) }
+    factory<LocalDataSource> { RoomDataSource(get()) }
+    factory<RemoteDataSource> {
+        MimoDataSource(
+            get(),
+            get()
+        )
+    }
     single<CoroutineDispatcher> { Dispatchers.Main }
     single(named("baseUrl")) { "https://mimochallenge.azurewebsites.net/api/" }
     single { MimoDB(get(named("baseUrl"))) }

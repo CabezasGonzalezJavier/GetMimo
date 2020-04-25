@@ -1,4 +1,4 @@
-package com.a.getmimo.data.source.remote
+package com.a.getmimo.data.source.remote.model
 
 data class Content(
     val color: String? = null,

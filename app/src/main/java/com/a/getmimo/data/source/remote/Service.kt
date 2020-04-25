@@ -1,6 +1,6 @@
-package com.a.getmimo.data.source
+package com.a.getmimo.data.source.remote
 
-import com.a.getmimo.data.source.remote.Response
+import com.a.getmimo.data.source.remote.model.Response
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 

@@ -8,7 +8,7 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
-import com.a.getmimo.data.source.MimoDB
+import com.a.getmimo.data.source.remote.MimoDB
 import com.a.getmimo.ui.MainActivity
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import okhttp3.mockwebserver.MockResponse
@@ -53,8 +53,10 @@ class MainUiTest : KoinTest {
             .check(matches(withText(containsString("var "))))
         onView(withId(R.id.main_editText)).perform(typeText("num"))
         onView(withId(R.id.main_button)).check(matches(not(isEnabled())))
-        onView(withId(R.id.main_editText)).perform(replaceText("number = "))
+        onView(withId(R.id.main_editText)).perform(replaceText("number = "), closeSoftKeyboard())
         onView(withId(R.id.main_button)).check(matches(isEnabled()))
+        onView(withId(R.id.main_button)).perform(click())
+        onView(withId(R.id.done_title)).check(matches(isDisplayed()))
     }
 
 }

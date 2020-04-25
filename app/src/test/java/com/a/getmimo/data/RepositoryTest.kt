@@ -1,7 +1,8 @@
 package com.a.getmimo.data
 
-import com.a.getmimo.data.source.LocalDataSource
-import com.a.getmimo.data.source.RemoteDataSource
+import com.a.getmimo.data.source.local.LocalDataSource
+import com.a.getmimo.data.source.remote.RemoteDataSource
+import com.a.getmimo.simpleLessonMocked
 import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -31,6 +32,15 @@ class RepositoryTest {
             repository.getLesson()
 
             verify(remoteDataSource).getLessons()
+        }
+    }
+
+    @Test
+    fun `saving lesson`(){
+        runBlocking {
+            repository.saveLesson(simpleLessonMocked)
+
+            verify(localDataSource).saveLesson(simpleLessonMocked)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.a.getmimo.data.source
+package com.a.getmimo.data.source.remote
 
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
