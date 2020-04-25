@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.a.getmimo.domain.entity.Lesson
 import com.a.getmimo.domain.entity.networking.Status
 import com.a.getmimo.domain.usecases.GetLessons
+import com.a.getmimo.ui.common.Event
 import com.a.getmimo.ui.common.ScopedViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -25,6 +26,11 @@ class MainViewModel(
             if (_model.value == null) refresh()
             return _model
         }
+
+
+    private val _navigation = MutableLiveData<Event<Lesson>>()
+    val navigation: LiveData<Event<Lesson>> = _navigation
+
 
     sealed class UiModel {
 
@@ -115,7 +121,7 @@ class MainViewModel(
     }
 
     fun lessonDone() {
-        _model.value = UiModel.Done(lessons[myIterator].id!!, lessons[myIterator].startDate)
+        _navigation.value = Event(lessons[myIterator])
     }
 
     private fun checkOneContent(text: String, startIndex: Int, endIndex: Int, finish: Int) {

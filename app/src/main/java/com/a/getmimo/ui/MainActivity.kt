@@ -32,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         )
 
         viewModel.model.observe(this, Observer(::updateUi))
+        viewModel.navigation.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                showDone(it.id!!, it.startDate)
+            }
+        })
+
         main_button.setOnClickListener {
             if (main_editText.text.toString().isEmpty()) {
                 viewModel.checkSolution(main_editText.text.toString())
@@ -64,7 +70,6 @@ class MainActivity : AppCompatActivity() {
             if (model is MainViewModel.UiModel.Loading) View.VISIBLE else View.GONE
 
         when (model) {
-            is MainViewModel.UiModel.Done -> showDone(model.idLesson, model.startLesson)
             is MainViewModel.UiModel.ShowEmptyData -> showEmptyData()
             is MainViewModel.UiModel.ShowErrorCall -> showErrorCall()
             is MainViewModel.UiModel.ShowCanCheckYourInternet -> showCanCheckYourInternet()
