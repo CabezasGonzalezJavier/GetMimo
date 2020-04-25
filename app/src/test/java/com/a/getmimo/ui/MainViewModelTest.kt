@@ -41,7 +41,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `refreshing content`(){
+    fun `refreshing content`() {
         mainViewModel.model.observeForever(observer)
 
         verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
@@ -60,7 +60,6 @@ class MainViewModelTest {
         runBlocking {
 
 
-
             whenever(getLessons.invoke()).thenReturn(emptyResource)
             mainViewModel.model.observeForever(observer)
             mainViewModel.myLaunch()
@@ -71,7 +70,6 @@ class MainViewModelTest {
             assertEquals(lessons, emptyResource.data)
         }
     }
-
 
 
     @Test
@@ -136,7 +134,6 @@ class MainViewModelTest {
 
             verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
             verify(observer).onChanged(MainViewModel.UiModel.Loading)
-            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
             assertEquals(lessons, defaultResource.data!!)
         }
     }
@@ -152,46 +149,47 @@ class MainViewModelTest {
 
             verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
             verify(observer).onChanged(MainViewModel.UiModel.Loading)
-            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
-            verify(observer).onChanged(MainViewModel.UiModel.ShowSecondText("text"))
+
+            verify(observer).onChanged(MainViewModel.UiModel.ShowText("text","text"))
             assertEquals(lessons, threeResource.data!!)
         }
     }
 
     @Test
-    fun `checking solution`(){
+    fun `checking solution`() {
         runBlocking {
 
             whenever(getLessons.invoke()).thenReturn(threeResource)
             mainViewModel.model.observeForever(observer)
             mainViewModel.myLaunch()
             val lessons = getLessons.invoke().data
-        mainViewModel.checkSolution("")
+            mainViewModel.checkSolution("")
 
-        verify(observer).onChanged(MainViewModel.UiModel.ShowEmptyInput)
-    }}
-
-    @Test
-    fun `checking ok solution`(){
-        runBlocking {
-
-        whenever(getLessons.invoke()).thenReturn(threeResource)
-        mainViewModel.model.observeForever(observer)
-        mainViewModel.myLaunch()
-        val lessons = getLessons.invoke().data
-        mainViewModel.checkSolution("text")
-
-        verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
-        verify(observer).onChanged(MainViewModel.UiModel.Loading)
-        verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
-        verify(observer).onChanged(MainViewModel.UiModel.ShowSecondText("text"))
-        assertEquals(lessons, threeResource.data!!)
-        verify(observer).onChanged(MainViewModel.UiModel.EnableButton)
+            verify(observer).onChanged(MainViewModel.UiModel.ShowEmptyInput)
         }
     }
 
     @Test
-    fun `checking wrong solution`(){
+    fun `checking ok solution`() {
+        runBlocking {
+
+            whenever(getLessons.invoke()).thenReturn(threeResource)
+            mainViewModel.model.observeForever(observer)
+            mainViewModel.myLaunch()
+            val lessons = getLessons.invoke().data
+            mainViewModel.checkSolution("text")
+
+            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
+            verify(observer).onChanged(MainViewModel.UiModel.Loading)
+
+            verify(observer).onChanged(MainViewModel.UiModel.ShowText("text", "text"))
+            assertEquals(lessons, threeResource.data!!)
+            verify(observer).onChanged(MainViewModel.UiModel.EnableButton)
+        }
+    }
+
+    @Test
+    fun `checking wrong solution`() {
         runBlocking {
 
             whenever(getLessons.invoke()).thenReturn(threeResource)
@@ -202,8 +200,7 @@ class MainViewModelTest {
 
             verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
             verify(observer).onChanged(MainViewModel.UiModel.Loading)
-            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
-            verify(observer).onChanged(MainViewModel.UiModel.ShowSecondText("text"))
+            verify(observer).onChanged(MainViewModel.UiModel.ShowText("text", "text"))
             assertEquals(lessons, threeResource.data!!)
             verify(observer).onChanged(MainViewModel.UiModel.DisableButton)
         }

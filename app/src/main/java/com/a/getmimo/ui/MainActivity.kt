@@ -1,6 +1,7 @@
 package com.a.getmimo.ui
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -68,8 +69,10 @@ class MainActivity : AppCompatActivity() {
             is MainViewModel.UiModel.ShowErrorCall -> showErrorCall()
             is MainViewModel.UiModel.ShowCanCheckYourInternet -> showCanCheckYourInternet()
             is MainViewModel.UiModel.RequestCheckInternet -> checkInternet()
-            is MainViewModel.UiModel.ShowFirstText -> showFirstText(model.firstText)
-            is MainViewModel.UiModel.ShowSecondText -> showSecondText(model.secondText)
+            is MainViewModel.UiModel.ShowText -> {
+                showFirstText(model.firstText)
+                showSecondText(model.secondText)
+            }
             is MainViewModel.UiModel.DisableButton -> showButtonDisable()
             is MainViewModel.UiModel.EnableButton -> showButtonEnable()
             is MainViewModel.UiModel.ShowEmptyInput -> showEmptyInput()
@@ -77,7 +80,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDone(idLesson: Int, startLesson: Long) {
-        DoneDialog.newInstance(idLesson,startLesson).show(supportFragmentManager, "")
+
+        val intent = Intent(this, DoneActivity::class.java)
+        intent.putExtra(DoneActivity.ID_LESSON, idLesson)
+        intent.putExtra(DoneActivity.START_LESSON, startLesson)
+        startActivity(intent)
     }
 
     private fun showEmptyInput() {

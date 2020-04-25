@@ -2,7 +2,6 @@ package com.a.getmimo.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.a.getmimo.domain.entity.Content
 import com.a.getmimo.domain.entity.Lesson
 import com.a.getmimo.domain.entity.networking.Status
 import com.a.getmimo.domain.usecases.GetLessons
@@ -38,8 +37,7 @@ class MainViewModel(
         object DisableButton : UiModel()
         object ShowEmptyInput : UiModel()
         data class Done(val idLesson: Int, val startLesson: Long) : UiModel()
-        data class ShowFirstText(val firstText: String) : UiModel()
-        data class ShowSecondText(val secondText: String) : UiModel()
+        data class ShowText(val firstText: String, val secondText: String) : UiModel()
     }
 
     init {
@@ -93,15 +91,18 @@ class MainViewModel(
                 if (lessons[myIterator].id != null) {
                     lessons[myIterator].startDate = Calendar.getInstance().timeInMillis
                     if (lessons[myIterator].content!!.size > 1) {
-                        for ((index, content) in lessons[myIterator].content!!.withIndex()) {
-                            checkThreeContent(content, index)
-                        }
+
+                        _model.value = UiModel.ShowText(
+                            lessons[myIterator].content!![0].text!!,
+                            lessons[myIterator].content!![2].text!!
+                        )
+                        solution = lessons[myIterator].content!![1].text!!
                     } else {
                         checkOneContent(
                             lessons[myIterator].content!![0].text!!,
                             lessons[myIterator].startIndex!!,
                             lessons[myIterator].endIndex!!,
-                            lessons[myIterator].content!!.size
+                            lessons[myIterator].content!![0].text!!.length
                         )
                     }
                 }
@@ -113,45 +114,22 @@ class MainViewModel(
 
     }
 
-    fun lessonDone(){
+    fun lessonDone() {
         _model.value = UiModel.Done(lessons[myIterator].id!!, lessons[myIterator].startDate)
     }
 
-    private fun checkThreeContent(content: Content, index: Int) {
-        when (index) {
-            0 -> {
-                content.text?.let {
-                    _model.value = UiModel.ShowFirstText(content.text)
-                }
-            }
-            1 -> {
-                content.text?.let {
-                    solution = content.text
-                }
-            }
-            2 -> {
-                content.text?.let {
-                    _model.value = UiModel.ShowSecondText(content.text)
-                }
-            }
-        }
-    }
-
     private fun checkOneContent(text: String, startIndex: Int, endIndex: Int, finish: Int) {
-        _model.value = UiModel.ShowFirstText(
-            text.subSequence(
-                0,
-                startIndex
-            ).toString()
-        )
 
         solution = text.substring(
             startIndex,
             endIndex
         )
 
-        _model.value = UiModel.ShowSecondText(
+        _model.value = UiModel.ShowText(
             text.subSequence(
+                0,
+                startIndex
+            ).toString(), text.subSequence(
                 endIndex,
                 finish
             ).toString()

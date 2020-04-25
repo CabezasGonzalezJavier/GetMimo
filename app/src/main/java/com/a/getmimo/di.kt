@@ -13,10 +13,7 @@ import com.a.getmimo.data.source.remote.RemoteDataSource
 import com.a.getmimo.domain.entity.networking.ResponseHandler
 import com.a.getmimo.domain.usecases.GetLessons
 import com.a.getmimo.domain.usecases.SaveLesson
-import com.a.getmimo.ui.DoneDialog
-import com.a.getmimo.ui.DoneViewModel
-import com.a.getmimo.ui.MainActivity
-import com.a.getmimo.ui.MainViewModel
+import com.a.getmimo.ui.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
@@ -64,7 +61,7 @@ private val scopesModule = module {
         viewModel { MainViewModel(get(), get()) }
     }
 
-    scope(named<DoneDialog>()) {
+    scope(named<DoneActivity>()) {
         viewModel { (idLesson: Int, startLesson: Long) ->
             DoneViewModel(
                 idLesson,

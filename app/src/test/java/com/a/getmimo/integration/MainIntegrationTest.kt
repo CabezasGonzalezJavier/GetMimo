@@ -64,8 +64,7 @@ class MainIntegrationTest : AutoCloseKoinTest() {
             mainViewModel.model.observeForever(observer)
             mainViewModel.myLaunch()
 
-            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
-            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+            verify(observer).onChanged(MainViewModel.UiModel.ShowText("text","text"))
         }
     }
 
@@ -108,8 +107,8 @@ class MainIntegrationTest : AutoCloseKoinTest() {
             mainViewModel.myLaunch()
             mainViewModel.checkSolution("text")
 
-            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
-            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+
+            verify(observer).onChanged(MainViewModel.UiModel.ShowText("text","text"))
             verify(observer).onChanged(MainViewModel.UiModel.EnableButton)
         }
     }
@@ -122,8 +121,7 @@ class MainIntegrationTest : AutoCloseKoinTest() {
             mainViewModel.myLaunch()
             mainViewModel.checkSolution("tet")
 
-            verify(observer).onChanged(MainViewModel.UiModel.RequestCheckInternet)
-            verify(observer).onChanged(MainViewModel.UiModel.ShowFirstText("text"))
+            verify(observer).onChanged(MainViewModel.UiModel.ShowText("text","text"))
             verify(observer).onChanged(MainViewModel.UiModel.DisableButton)
         }
     }
