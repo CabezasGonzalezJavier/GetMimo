@@ -1,17 +1,23 @@
 package com.a.getmimo
 
-import android.os.SystemClock
+import android.view.View
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.util.HumanReadables
+import androidx.test.espresso.util.TreeIterables
 import androidx.test.rule.ActivityTestRule
 import com.a.getmimo.data.source.remote.MimoDB
 import com.a.getmimo.ui.MainActivity
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import okhttp3.mockwebserver.MockResponse
+import org.hamcrest.Matcher
 import org.hamcrest.Matchers.not
 import org.hamcrest.core.StringContains.containsString
 import org.junit.Before
@@ -19,6 +25,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.get
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 
 class MainUiTest : KoinTest {
@@ -47,16 +55,22 @@ class MainUiTest : KoinTest {
     @Test
     fun gettingLessons() {
         activityTestRule.launchActivity(null)
+
         onView(withId(R.id.main_first))
             .check(matches(isDisplayed()))
         onView(withId(R.id.main_first))
             .check(matches(withText(containsString("var "))))
+
+        //wrong answer
         onView(withId(R.id.main_editText)).perform(typeText("num"))
         onView(withId(R.id.main_button)).check(matches(not(isEnabled())))
+
+        // right answer
         onView(withId(R.id.main_editText)).perform(replaceText("number = "), closeSoftKeyboard())
         onView(withId(R.id.main_button)).check(matches(isEnabled()))
+
+        // checking successful message
         onView(withId(R.id.main_button)).perform(click())
         onView(withId(R.id.done_title)).check(matches(isDisplayed()))
     }
-
 }

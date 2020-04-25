@@ -12,6 +12,9 @@ import com.a.getmimo.data.source.remote.MimoDataSource
 import com.a.getmimo.data.source.remote.RemoteDataSource
 import com.a.getmimo.domain.entity.networking.ResponseHandler
 import com.a.getmimo.domain.usecases.GetLessons
+import com.a.getmimo.domain.usecases.SaveLesson
+import com.a.getmimo.ui.DoneDialog
+import com.a.getmimo.ui.DoneViewModel
 import com.a.getmimo.ui.MainActivity
 import com.a.getmimo.ui.MainViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,7 +30,7 @@ fun Application.initDI() {
     startKoin {
         androidLogger()
         androidContext(this@initDI)
-        modules(listOf(appModule, dataModule, useCasesModule,scopesModule))
+        modules(listOf(appModule, dataModule, useCasesModule, scopesModule))
     }
 }
 
@@ -52,11 +55,23 @@ val dataModule = module {
 
 val useCasesModule = module {
     factory { GetLessons(get()) }
+    factory { SaveLesson(get()) }
 }
 
 private val scopesModule = module {
+
     scope(named<MainActivity>()) {
         viewModel { MainViewModel(get(), get()) }
-        scoped { GetLessons(get()) }
+    }
+
+    scope(named<DoneDialog>()) {
+        viewModel { (idLesson: Int, startLesson: Long) ->
+            DoneViewModel(
+                idLesson,
+                startLesson,
+                get(),
+                get()
+            )
+        }
     }
 }

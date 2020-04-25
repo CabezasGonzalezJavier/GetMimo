@@ -40,7 +40,10 @@ val threeDefaultLesson= Lesson(1, threeContentList, 0, 0)
 val threeOneLesson = listOf(threeDefaultLesson.copy())
 val threeResource = Resource(Status.SUCCESS, threeOneLesson, "")
 
-val simpleLessonMocked = SimpleLesson(1577836800000L, 1577836820000L, 9)
+val startDate = 1577836800000L
+val endDate = 1577836820000L
+val idLesson = 9
+val simpleLessonMocked = SimpleLesson(startDate, endDate, idLesson)
 
 class FakeLocalDataSource : LocalDataSource {
     override suspend fun saveLesson(simple: SimpleLesson) {}

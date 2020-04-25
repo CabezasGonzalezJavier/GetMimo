@@ -15,7 +15,7 @@ class MainViewModel(
     uiDispatcher: CoroutineDispatcher
 ) : ScopedViewModel(uiDispatcher) {
 
-    lateinit var solution: String
+    var solution = ""
     lateinit var lessons: List<Lesson>
     var myIterator = 0
 

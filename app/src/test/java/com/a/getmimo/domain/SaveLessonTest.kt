@@ -28,7 +28,7 @@ class SaveLessonTest {
     fun `saving lesson`() {
         runBlocking {
 
-            saveLesson.saveLesson(simpleLessonMocked)
+            saveLesson.invoke(simpleLessonMocked)
 
             verify(repository).saveLesson(simpleLessonMocked)
         }

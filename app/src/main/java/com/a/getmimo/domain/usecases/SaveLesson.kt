@@ -5,7 +5,7 @@ import com.a.getmimo.domain.entity.SimpleLesson
 
 class SaveLesson(var repositoryInterface: RepositoryInterface) {
 
-    suspend fun saveLesson(simpleLesson: SimpleLesson): SimpleLesson = with(simpleLesson) {
+    suspend fun invoke(simpleLesson: SimpleLesson): SimpleLesson = with(simpleLesson) {
         also {
             repositoryInterface.saveLesson(simpleLesson)
         }
