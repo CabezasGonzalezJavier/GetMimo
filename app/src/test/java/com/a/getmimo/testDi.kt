@@ -26,7 +26,7 @@ private val mockedAppModule = module {
 
 val content = Content("color", "texttexttext")
 val contentList = listOf(content.copy())
-val defaultLesson= Lesson(1, contentList, 4, 8)
+val defaultLesson= Lesson(1, contentList, 4, 8, 0L)
 val oneLesson = listOf(defaultLesson.copy())
 val defaultResource = Resource(Status.SUCCESS, oneLesson, "")
 
@@ -36,7 +36,7 @@ val emptyResource = Resource(Status.SUCCESS, emptyLessons, "")
 
 val threeContent = Content("color", "text")
 val threeContentList = listOf(threeContent.copy(),threeContent.copy(),threeContent.copy())
-val threeDefaultLesson= Lesson(1, threeContentList, 0, 0)
+val threeDefaultLesson= Lesson(1, threeContentList, 0, 0, 0L)
 val threeOneLesson = listOf(threeDefaultLesson.copy())
 val threeResource = Resource(Status.SUCCESS, threeOneLesson, "")
 

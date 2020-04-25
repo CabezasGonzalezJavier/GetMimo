@@ -11,7 +11,8 @@ fun ServerLesson.toDomainLesson():  DomainLesson= DomainLesson(
     id,
     content?.map { it.toDomainContent() },
     input?.startIndex,
-    input?.endIndex
+    input?.endIndex,
+    0L
 )
 
 fun ServerContent.toDomainContent(): DomainContent = DomainContent(

@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.checkSolution(main_editText.text.toString())
             } else {
 
-                viewModel.checkInput()
+                viewModel.lessonDone()
             }
         }
 
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             if (model is MainViewModel.UiModel.Loading) View.VISIBLE else View.GONE
 
         when (model) {
-            is MainViewModel.UiModel.Done -> showDone()
+            is MainViewModel.UiModel.Done -> showDone(model.idLesson, model.startLesson)
             is MainViewModel.UiModel.ShowEmptyData -> showEmptyData()
             is MainViewModel.UiModel.ShowErrorCall -> showErrorCall()
             is MainViewModel.UiModel.ShowCanCheckYourInternet -> showCanCheckYourInternet()
@@ -76,8 +76,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showDone() {
-        DoneDialog.newInstance().show(supportFragmentManager, "")
+    private fun showDone(idLesson: Int, startLesson: Long) {
+        DoneDialog.newInstance(idLesson,startLesson).show(supportFragmentManager, "")
     }
 
     private fun showEmptyInput() {

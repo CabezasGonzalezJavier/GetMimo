@@ -17,4 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/done_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_done"
+        android:visibility="invisible"
+        android:layout_margin="@dimen/padding"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="@+id/done_title"
+        app:layout_constraintStart_toStartOf="@+id/done_title"
+        app:layout_constraintTop_toBottomOf="@+id/done_title"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,14 +9,15 @@ import com.a.getmimo.domain.usecases.GetLessons
 import com.a.getmimo.ui.common.ScopedViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MainViewModel(
-    val getLessons: GetLessons,
+    private val getLessons: GetLessons,
     uiDispatcher: CoroutineDispatcher
 ) : ScopedViewModel(uiDispatcher) {
 
-    var solution = ""
     lateinit var lessons: List<Lesson>
+    private var solution = ""
     var myIterator = 0
 
     private val _model = MutableLiveData<UiModel>()
@@ -28,7 +29,6 @@ class MainViewModel(
 
     sealed class UiModel {
 
-        object Done : UiModel()
         object Loading : UiModel()
         object ShowCanCheckYourInternet : UiModel()
         object ShowErrorCall : UiModel()
@@ -37,6 +37,7 @@ class MainViewModel(
         object EnableButton : UiModel()
         object DisableButton : UiModel()
         object ShowEmptyInput : UiModel()
+        data class Done(val idLesson: Int, val startLesson: Long) : UiModel()
         data class ShowFirstText(val firstText: String) : UiModel()
         data class ShowSecondText(val secondText: String) : UiModel()
     }
@@ -82,39 +83,41 @@ class MainViewModel(
         }
     }
 
-    fun checkInput() {
+    private fun checkInput() {
 
         if (myIterator < lessons.size) {
             if (lessons[myIterator].startIndex != null &&
                 lessons[myIterator].startIndex != null &&
                 lessons[myIterator].content != null
             ) {
-
-                if (lessons[myIterator].content!!.size > 1) {
-                    for ((index, content) in lessons[myIterator].content!!.withIndex()) {
-                        checkThreeContent(content, index)
+                if (lessons[myIterator].id != null) {
+                    lessons[myIterator].startDate = Calendar.getInstance().timeInMillis
+                    if (lessons[myIterator].content!!.size > 1) {
+                        for ((index, content) in lessons[myIterator].content!!.withIndex()) {
+                            checkThreeContent(content, index)
+                        }
+                    } else {
+                        checkOneContent(
+                            lessons[myIterator].content!![0].text!!,
+                            lessons[myIterator].startIndex!!,
+                            lessons[myIterator].endIndex!!,
+                            lessons[myIterator].content!!.size
+                        )
                     }
-                } else {
-                    checkOneContent(
-                        lessons[myIterator].content!![0].text!!,
-                        lessons[myIterator].startIndex!!,
-                        lessons[myIterator].endIndex!!,
-                        lessons[myIterator].content!!.size
-                    )
                 }
             } else {
                 myIterator += 1
                 checkInput()
             }
-
-        } else {
-            _model.value = UiModel.Done
         }
 
     }
 
-    fun checkThreeContent(content: Content, index: Int) {
-        myIterator += 1
+    fun lessonDone(){
+        _model.value = UiModel.Done(lessons[myIterator].id!!, lessons[myIterator].startDate)
+    }
+
+    private fun checkThreeContent(content: Content, index: Int) {
         when (index) {
             0 -> {
                 content.text?.let {
@@ -134,8 +137,7 @@ class MainViewModel(
         }
     }
 
-    fun checkOneContent(text: String, startIndex: Int, endIndex: Int, finish: Int) {
-        myIterator += 1
+    private fun checkOneContent(text: String, startIndex: Int, endIndex: Int, finish: Int) {
         _model.value = UiModel.ShowFirstText(
             text.subSequence(
                 0,
